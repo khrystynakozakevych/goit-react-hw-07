@@ -1,9 +1,8 @@
-import { nanoid } from 'nanoid';
 import { useDispatch } from 'react-redux';
 import { ErrorMessage, Formik, Field, Form } from 'formik';
 import css from './ContactForm.module.css';
 import * as Yup from 'yup';
-import { addContact } from '../../redux/contactsSlice';
+import { addContact } from '../../redux/contactsOps';
 import { useState } from 'react';
 
 const ContactForm = () => {
@@ -15,12 +14,7 @@ const ContactForm = () => {
   };
 
   const handleSubmit = (values, actions) => {
-    dispatch(
-      addContact({
-        ...values,
-        id: nanoid(),
-      })
-    );
+    dispatch(addContact(values));
     actions.resetForm();
   };
 
@@ -42,6 +36,7 @@ const ContactForm = () => {
       .matches(emailRegExp, 'Invalid email format'),
     address: Yup.string().max(100, 'Max 100 characters!').notRequired(),
   });
+
   return (
     <div className={css.form_container}>
       <Formik
@@ -49,7 +44,7 @@ const ContactForm = () => {
         initialValues={{ name: '', number: '', email: '', address: '' }}
         validationSchema={applySchema}
       >
-        {({ resetForm }) => (
+        {() => (
           <Form>
             <div className={css.wrapper}>
               <Field
