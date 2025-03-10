@@ -30,7 +30,7 @@ const Contact = ({
             onClick={() => setShowMore(prev => !prev)}
             className={css.toggle_btn}
           >
-            {showMore ? 'More' : 'Less'}
+            {showMore ? 'Less' : 'More'}
           </button>
         )}
         <button onClick={() => onDelete(id)}>Delete</button>
